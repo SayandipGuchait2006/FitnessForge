@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, ChevronDown, Compass } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useRafScrollEffect } from '@/hooks/use-raf-scroll-effect'
 
 interface SectionInfo {
   id: string
@@ -30,17 +31,17 @@ export function ProgressTracker() {
   const [viewedSections, setViewedSections] = useState<Set<string>>(new Set())
   const autoCollapseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  // Track scroll progress
-  useEffect(() => {
-    const handleScroll = () => {
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight
-      const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0
-      setScrollPercent(Math.min(Math.round(progress), 100))
+  const lastRounded = useRef(-1)
+
+  useRafScrollEffect(() => {
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight
+    const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0
+    const rounded = Math.min(Math.round(progress), 100)
+    if (rounded !== lastRounded.current) {
+      lastRounded.current = rounded
+      setScrollPercent(rounded)
     }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  })
 
   // IntersectionObserver for sections
   useEffect(() => {

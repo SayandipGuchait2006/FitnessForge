@@ -3,13 +3,8 @@
 import { Check, Instagram, Twitter, Linkedin, Calendar } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-
-const trainerNameToId: Record<string, string> = {
-  'Arjun Mehta': 'arjun',
-  'Priya Sharma': 'priya',
-  'Vikram Singh': 'vikram',
-  'Ananya Rao': 'ananya',
-}
+import { TRAINER_NAME_TO_BOOKING_ID } from '@/lib/trainer-meta'
+import { siteSocial } from '@/lib/site-config'
 
 interface Trainer {
   name: string
@@ -143,7 +138,7 @@ export function TrainerProfileModal({ open, onOpenChange, trainer }: TrainerProf
           {/* Book Session Button */}
           <Button
             onClick={() => {
-              const trainerId = trainerNameToId[trainer.name] || ''
+              const trainerId = TRAINER_NAME_TO_BOOKING_ID[trainer.name] || ''
               onOpenChange(false)
               // Dispatch custom event for page-level TrainerBooking component to listen to
               window.dispatchEvent(new CustomEvent('open-trainer-booking', { detail: { trainerId } }))
@@ -157,20 +152,22 @@ export function TrainerProfileModal({ open, onOpenChange, trainer }: TrainerProf
           {/* Social Links */}
           <div className="flex items-center justify-center gap-3">
             {[
-              { icon: Instagram, label: 'Instagram', hoverColor: '#E4405F' },
-              { icon: Twitter, label: 'Twitter', hoverColor: '#FFFFFF' },
-              { icon: Linkedin, label: 'LinkedIn', hoverColor: '#0A66C2' },
+              { icon: Instagram, label: 'Instagram', href: siteSocial.instagram },
+              { icon: Twitter, label: 'Twitter', href: siteSocial.twitter },
+              { icon: Linkedin, label: 'LinkedIn', href: siteSocial.linkedin },
             ].map((social) => {
               const SocialIcon = social.icon
               return (
-                <button
+                <a
                   key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={social.label}
                   className="social-icon-hover flex h-9 w-9 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.03] text-neutral-500 transition-all duration-300"
-                  style={{ '--hover-color': social.hoverColor } as React.CSSProperties}
                 >
                   <SocialIcon className="h-4 w-4" />
-                </button>
+                </a>
               )
             })}
           </div>

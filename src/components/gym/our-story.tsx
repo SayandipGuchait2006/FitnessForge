@@ -107,7 +107,15 @@ export function OurStory() {
                   variant="outline"
                   size="lg"
                   className="border-[#d4a017]/40 bg-transparent text-[#e8b923] hover:bg-[#d4a017]/10 hover:border-[#d4a017]/60 font-semibold transition-all duration-300"
+                  onClick={() => {
+                   document.getElementById("pricing")?.scrollIntoView({ 
+                     behavior: "smooth",
+                   });
+                 }}
+                
                 >
+
+            
                   Learn More
                   <ArrowRight className="ml-1.5 h-4 w-4" />
                 </Button>

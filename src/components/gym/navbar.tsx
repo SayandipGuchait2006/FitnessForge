@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Flame } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -13,6 +13,7 @@ import {
   SheetTitle,
   SheetClose,
 } from '@/components/ui/sheet'
+import { useRafScrollEffect } from '@/hooks/use-raf-scroll-effect'
 
 const navLinks = [
   { label: 'Home', href: '#home' },
@@ -36,19 +37,21 @@ export function Navbar({ promoVisible = false }: NavbarProps) {
   const [activeSection, setActiveSection] = useState('#home')
   const [scrollProgress, setScrollProgress] = useState(0)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
-      setPastHero(window.scrollY > 600)
+  const scrollSnap = useRef({ scrolled: false, pastHero: false, progress: 0 })
 
-      // Calculate scroll progress (0 to 100)
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight
-      const progress = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0
-      setScrollProgress(Math.min(progress, 100))
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  useRafScrollEffect(() => {
+    const y = window.scrollY
+    const scrolled = y > 50
+    const pastHero = y > 600
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight
+    const progress = docHeight > 0 ? Math.min((y / docHeight) * 100, 100) : 0
+
+    const s = scrollSnap.current
+    if (s.scrolled !== scrolled) setScrolled(scrolled)
+    if (s.pastHero !== pastHero) setPastHero(pastHero)
+    if (Math.abs(s.progress - progress) > 0.25) setScrollProgress(progress)
+    scrollSnap.current = { scrolled, pastHero, progress }
+  })
 
   // IntersectionObserver for active section detection
   useEffect(() => {

@@ -1,19 +1,21 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowUp } from 'lucide-react'
+import { useRafScrollEffect } from '@/hooks/use-raf-scroll-effect'
 
 export function BackToTop() {
   const [visible, setVisible] = useState(false)
+  const lastVisible = useRef(false)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setVisible(window.scrollY > 500)
+  useRafScrollEffect(() => {
+    const next = window.scrollY > 500
+    if (next !== lastVisible.current) {
+      lastVisible.current = next
+      setVisible(next)
     }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  })
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })

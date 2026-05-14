@@ -5,10 +5,11 @@ import { motion } from 'framer-motion'
 import { Instagram, Youtube, Twitter, Facebook, ArrowUp, Send } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { ScrollReveal } from '@/components/gym/scroll-reveal'
+import { siteSocial } from '@/lib/site-config'
 
 const quickLinks = [
   { label: 'Home', href: '#home' },
-  { label: 'About', href: '#home' },
+  { label: 'About', href: '#about' },
   { label: 'Classes', href: '#classes' },
   { label: 'Pricing', href: '#pricing' },
   { label: 'Trainers', href: '#trainers' },
@@ -25,10 +26,10 @@ const classLinks = [
 ]
 
 const socialIcons = [
-  { icon: Instagram, label: 'Instagram', href: '#', hoverColor: '#E4405F' },
-  { icon: Youtube, label: 'YouTube', href: '#', hoverColor: '#FF0000' },
-  { icon: Twitter, label: 'Twitter', href: '#', hoverColor: '#FFFFFF' },
-  { icon: Facebook, label: 'Facebook', href: '#', hoverColor: '#1877F2' },
+  { icon: Instagram, label: 'Instagram', href: siteSocial.instagram },
+  { icon: Youtube, label: 'YouTube', href: siteSocial.youtube },
+  { icon: Twitter, label: 'Twitter', href: siteSocial.twitter },
+  { icon: Facebook, label: 'Facebook', href: siteSocial.facebook },
 ]
 
 export default function Footer() {
@@ -95,11 +96,12 @@ export default function Footer() {
                   <motion.a
                     key={social.label}
                     href={social.href}
-                    aria-label={social.label}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${social.label} (opens in new tab)`}
                     whileHover={{ scale: 1.15, rotate: 8 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                     className="size-10 rounded-lg bg-[#1a1a1a] border border-white/5 flex items-center justify-center text-gray-500 hover:border-white/20 transition-colors duration-300 social-icon-hover"
-                    style={{ '--hover-color': social.hoverColor } as React.CSSProperties}
                   >
                     <social.icon className="size-4" />
                   </motion.a>

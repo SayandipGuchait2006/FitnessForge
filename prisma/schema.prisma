@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,6 +5,24 @@ generator client {
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
+}
+
+enum MembershipStatus {
+  AWAITING_PAYMENT
+  ACTIVE
+  PAYMENT_FAILED
+  CANCELLED
+}
+
+enum PaymentGateway {
+  RAZORPAY
+  NOWPAYMENTS
+}
+
+enum PaymentRecordStatus {
+  CREATED
+  SUCCEEDED
+  FAILED
 }
 
 model User {
@@ -55,4 +67,41 @@ model Newsletter {
   id        String   @id @default(cuid())
   email     String   @unique
   createdAt DateTime @default(now())
+}
+
+model Membership {
+  id               String            @id @default(cuid())
+  selectedPlan     String
+  name             String
+  email            String
+  phone            String
+  date             String?
+  timeSlot         String?
+  status           MembershipStatus  @default(AWAITING_PAYMENT)
+  amountPaise      Int?
+  currency         String            @default("INR")
+  razorpayOrderId  String?           @unique
+  cryptoInvoiceId  String?
+  cryptoPayUrl     String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @default(now()) @updatedAt
+  payments         Payment[]
+}
+
+model Payment {
+  id            String              @id @default(cuid())
+  membershipId  String
+  membership    Membership          @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  gateway       PaymentGateway
+  status        PaymentRecordStatus @default(CREATED)
+  orderId       String?
+  paymentId     String?             @unique
+  amountPaise   Int
+  currency      String              @default("INR")
+  method        String?
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @default(now()) @updatedAt
+
+  @@index([membershipId])
+  @@index([status])
 }

@@ -1,39 +1,76 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 /**
- * Tracks scroll position and updates CSS custom properties used for
- * parallax effects on section numbers and section progress indicators.
+ * Updates CSS variables for parallax / section progress.
+ * Throttled to one layout pass per frame and caches `.section-progress` nodes
+ * (avoids querySelectorAll + many getBoundingClientRect on every raw scroll event).
  */
 export function ScrollTracker() {
+  const sectionsRef = useRef<HTMLElement[]>([])
+  const rafRef = useRef(0)
+
   useEffect(() => {
-    const handleScroll = () => {
+    const collect = () => {
+      sectionsRef.current = Array.from(
+        document.querySelectorAll('.section-progress')
+      ) as HTMLElement[]
+    }
+
+    collect()
+    const t = window.setTimeout(collect, 500)
+
+    const reduceMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
+
+    const run = () => {
       const scrollY = window.scrollY
       const docHeight = document.documentElement.scrollHeight - window.innerHeight
       const scrollFraction = docHeight > 0 ? scrollY / docHeight : 0
-
       document.documentElement.style.setProperty('--scroll', String(scrollFraction))
 
-      // Update section progress indicators
-      const progressSections = document.querySelectorAll('.section-progress')
-      progressSections.forEach((section) => {
+      if (reduceMotion) return
+
+      const viewportHeight = window.innerHeight
+      const sections = sectionsRef.current
+      for (let i = 0; i < sections.length; i++) {
+        const section = sections[i]
         const rect = section.getBoundingClientRect()
         const sectionHeight = rect.height
-        const viewportHeight = window.innerHeight
-
-        // Calculate how much of the section has been scrolled through
         const scrolledInto = viewportHeight - rect.top
-        const progress = Math.max(0, Math.min(1, scrolledInto / (sectionHeight + viewportHeight * 0.5)))
+        const progress = Math.max(
+          0,
+          Math.min(1, scrolledInto / (sectionHeight + viewportHeight * 0.5))
+        )
+        section.style.setProperty('--section-progress', `${progress * 100}%`)
+      }
+    }
 
-        ;(section as HTMLElement).style.setProperty('--section-progress', `${progress * 100}%`)
+    const onScrollOrResize = () => {
+      if (rafRef.current) return
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = 0
+        run()
       })
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll() // Initial call
+    const onResize = () => {
+      collect()
+      onScrollOrResize()
+    }
 
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', onScrollOrResize, { passive: true })
+    window.addEventListener('resize', onResize, { passive: true })
+    onScrollOrResize()
+
+    return () => {
+      window.removeEventListener('scroll', onScrollOrResize)
+      window.removeEventListener('resize', onResize)
+      clearTimeout(t)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    }
   }, [])
 
   return null

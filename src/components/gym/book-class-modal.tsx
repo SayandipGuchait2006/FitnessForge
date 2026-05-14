@@ -72,8 +72,20 @@ export function BookClassModal({ open, onOpenChange, className }: BookClassModal
     e.preventDefault()
     setError('')
 
-    if (!name.trim() || !email.trim()) {
+    if (!name.trim() || !email.trim() || !phone.trim()) {
       setError('Please fill in all required fields.')
+      return
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email.trim())) {
+      setError('Please enter a valid email address.')
+      return
+    }
+
+    const cleanedPhone = phone.replace(/\D/g, '')
+    if (cleanedPhone.length !== 10) {
+      setError('Please enter a valid 10-digit phone number.')
       return
     }
 
@@ -87,7 +99,7 @@ export function BookClassModal({ open, onOpenChange, className }: BookClassModal
           className,
           name: name.trim(),
           email: email.trim(),
-          phone: phone.trim() || undefined,
+          phone: cleanedPhone,
           date: date || undefined,
           timeSlot: timeSlot || undefined,
         }),
@@ -110,7 +122,6 @@ export function BookClassModal({ open, onOpenChange, className }: BookClassModal
   return (
     <Dialog open={open} onOpenChange={handleClose}>
       <DialogContent className="bg-[#111111] border-white/[0.08] text-white sm:max-w-md rounded-2xl p-0 overflow-hidden">
-        {/* Amber accent top bar */}
         <div className="h-1 bg-gradient-to-r from-[#d4a017] to-[#e8b923]" />
 
         <AnimatePresence mode="wait">
@@ -164,7 +175,6 @@ export function BookClassModal({ open, onOpenChange, className }: BookClassModal
               </DialogHeader>
 
               <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-4">
-                {/* Class Name Badge */}
                 {className && (
                   <div className="flex items-center gap-2">
                     <Badge className="bg-gradient-to-r from-[#d4a017] to-[#e8b923] text-black font-semibold text-xs px-3 py-1 border-0">
@@ -173,7 +183,6 @@ export function BookClassModal({ open, onOpenChange, className }: BookClassModal
                   </div>
                 )}
 
-                {/* Name */}
                 <div className="space-y-1.5">
                   <Label className="text-neutral-300 text-xs">
                     Full Name <span className="text-red-400">*</span>
@@ -187,7 +196,6 @@ export function BookClassModal({ open, onOpenChange, className }: BookClassModal
                   />
                 </div>
 
-                {/* Email */}
                 <div className="space-y-1.5">
                   <Label className="text-neutral-300 text-xs">
                     Email <span className="text-red-400">*</span>
@@ -202,21 +210,21 @@ export function BookClassModal({ open, onOpenChange, className }: BookClassModal
                   />
                 </div>
 
-                {/* Phone */}
                 <div className="space-y-1.5">
-                  <Label className="text-neutral-300 text-xs">Phone</Label>
+                  <Label className="text-neutral-300 text-xs">
+                    Phone <span className="text-red-400">*</span>
+                  </Label>
                   <Input
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+91 98765 43210"
+                    required
                     className="bg-white/[0.04] border-white/[0.08] text-white placeholder:text-neutral-500 focus:border-[#d4a017]/50 focus:ring-[#d4a017]/20 h-10"
                   />
                 </div>
 
-                {/* Date and Time Row */}
                 <div className="grid grid-cols-2 gap-3">
-                  {/* Preferred Date */}
                   <div className="space-y-1.5">
                     <Label className="text-neutral-300 text-xs">Preferred Date</Label>
                     <Input
@@ -227,7 +235,6 @@ export function BookClassModal({ open, onOpenChange, className }: BookClassModal
                     />
                   </div>
 
-                  {/* Time Slot */}
                   <div className="space-y-1.5">
                     <Label className="text-neutral-300 text-xs">Time Slot</Label>
                     <Select value={timeSlot} onValueChange={setTimeSlot}>
@@ -249,7 +256,6 @@ export function BookClassModal({ open, onOpenChange, className }: BookClassModal
                   </div>
                 </div>
 
-                {/* Error Message */}
                 {error && (
                   <motion.div
                     initial={{ opacity: 0, y: -5 }}
@@ -261,7 +267,6 @@ export function BookClassModal({ open, onOpenChange, className }: BookClassModal
                   </motion.div>
                 )}
 
-                {/* Submit Button */}
                 <Button
                   type="submit"
                   disabled={isSubmitting}

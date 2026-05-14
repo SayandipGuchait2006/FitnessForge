@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button'
 import { ScrollReveal } from '@/components/gym/scroll-reveal'
 import { TrainerProfileModal } from '@/components/gym/trainer-profile-modal'
 import { cn } from '@/lib/utils'
+import { TRAINER_NAME_TO_BOOKING_ID } from '@/lib/trainer-meta'
+import { siteSocial } from '@/lib/site-config'
 
 interface Trainer {
   name: string
@@ -57,9 +59,9 @@ const trainers: Trainer[] = [
 ]
 
 const socialLinks = [
-  { icon: Instagram, label: 'Instagram', hoverColor: '#E4405F' },
-  { icon: Twitter, label: 'Twitter', hoverColor: '#FFFFFF' },
-  { icon: Linkedin, label: 'LinkedIn', hoverColor: '#0A66C2' },
+  { icon: Instagram, label: 'Instagram', href: siteSocial.instagram },
+  { icon: Twitter, label: 'Twitter', href: siteSocial.twitter },
+  { icon: Linkedin, label: 'LinkedIn', href: siteSocial.linkedin },
 ]
 
 export function Trainers() {
@@ -120,6 +122,14 @@ export function Trainers() {
                     <Button
                       size="sm"
                       className="bg-white text-black font-semibold hover:bg-white/90 shadow-xl"
+                      onClick={() => {
+                        const trainerId = TRAINER_NAME_TO_BOOKING_ID[trainer.name] || ''
+                        window.dispatchEvent(
+                          new CustomEvent('open-trainer-booking', {
+                            detail: { trainerId },
+                          })
+                        )
+                      }}
                     >
                       <Calendar className="mr-1.5 h-4 w-4" />
                       Book Session
@@ -131,14 +141,17 @@ export function Trainers() {
                     {socialLinks.map((social, i) => {
                       const SocialIcon = social.icon
                       return (
-                        <button
+                        <a
                           key={social.label}
-                          aria-label={social.label}
+                          href={social.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${social.label} (opens in new tab)`}
                           className="social-icon-hover flex h-9 w-9 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm text-white transition-all duration-300 hover:bg-white/10 hover:border-white/30"
-                          style={{ transitionDelay: `${i * 75}ms`, '--hover-color': social.hoverColor } as React.CSSProperties}
+                          style={{ transitionDelay: `${i * 75}ms` } as React.CSSProperties}
                         >
                           <SocialIcon className="h-4 w-4" />
-                        </button>
+                        </a>
                       )
                     })}
                   </div>

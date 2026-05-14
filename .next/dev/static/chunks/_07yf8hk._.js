@@ -59,10 +59,10 @@ function NewsletterPopup() {
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "NewsletterPopup.useEffect": ()=>{
             if (isDismissed()) return;
-            const handleScroll = {
-                "NewsletterPopup.useEffect.handleScroll": ()=>{
+            let raf = 0;
+            const run = {
+                "NewsletterPopup.useEffect.run": ()=>{
                     if (isDismissed()) return;
-                    // Don't show if cookie consent hasn't been resolved yet
                     const cookieConsent = localStorage.getItem(COOKIE_KEY);
                     if (!cookieConsent) return;
                     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -70,15 +70,31 @@ function NewsletterPopup() {
                     const scrollPercent = window.scrollY / docHeight;
                     if (scrollPercent >= 0.5) {
                         setOpen(true);
-                        window.removeEventListener('scroll', handleScroll);
+                        window.removeEventListener('scroll', tick);
+                        if (raf) cancelAnimationFrame(raf);
                     }
                 }
-            }["NewsletterPopup.useEffect.handleScroll"];
-            window.addEventListener('scroll', handleScroll, {
+            }["NewsletterPopup.useEffect.run"];
+            const tick = {
+                "NewsletterPopup.useEffect.tick": ()=>{
+                    if (raf) return;
+                    raf = requestAnimationFrame({
+                        "NewsletterPopup.useEffect.tick": ()=>{
+                            raf = 0;
+                            run();
+                        }
+                    }["NewsletterPopup.useEffect.tick"]);
+                }
+            }["NewsletterPopup.useEffect.tick"];
+            window.addEventListener('scroll', tick, {
                 passive: true
             });
+            tick();
             return ({
-                "NewsletterPopup.useEffect": ()=>window.removeEventListener('scroll', handleScroll)
+                "NewsletterPopup.useEffect": ()=>{
+                    window.removeEventListener('scroll', tick);
+                    if (raf) cancelAnimationFrame(raf);
+                }
             })["NewsletterPopup.useEffect"];
         }
     }["NewsletterPopup.useEffect"], []);
@@ -139,7 +155,7 @@ function NewsletterPopup() {
                     children: "Newsletter Subscription"
                 }, void 0, false, {
                     fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                    lineNumber: 116,
+                    lineNumber: 129,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
@@ -147,7 +163,7 @@ function NewsletterPopup() {
                     children: "Subscribe to the Forge Fitness newsletter for exclusive fitness tips and member-only discounts."
                 }, void 0, false, {
                     fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                    lineNumber: 117,
+                    lineNumber: 130,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AnimatePresence"], {
@@ -208,17 +224,17 @@ function NewsletterPopup() {
                                         strokeWidth: 3
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                        lineNumber: 141,
+                                        lineNumber: 154,
                                         columnNumber: 19
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                    lineNumber: 136,
+                                    lineNumber: 149,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                lineNumber: 130,
+                                lineNumber: 143,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -226,7 +242,7 @@ function NewsletterPopup() {
                                 children: "Welcome to the family!"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                lineNumber: 144,
+                                lineNumber: 157,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -234,7 +250,7 @@ function NewsletterPopup() {
                                 children: "You're now part of the Avenger community. Check your inbox for a welcome surprise."
                             }, void 0, false, {
                                 fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                lineNumber: 145,
+                                lineNumber: 158,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -243,13 +259,13 @@ function NewsletterPopup() {
                                 children: "Continue Browsing"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                lineNumber: 148,
+                                lineNumber: 161,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, "success", true, {
                         fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                        lineNumber: 121,
+                        lineNumber: 134,
                         columnNumber: 13
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
                         initial: {
@@ -278,7 +294,7 @@ function NewsletterPopup() {
                                 className: "h-1 w-full bg-gradient-to-r from-[#d4a017] via-[#e8b923] to-[#d4a017]"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                lineNumber: 164,
+                                lineNumber: 177,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -288,14 +304,14 @@ function NewsletterPopup() {
                                         className: "absolute top-6 right-8 w-4 h-4 text-[#d4a017]/30"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                        lineNumber: 168,
+                                        lineNumber: 181,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$diamond$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Diamond$3e$__["Diamond"], {
                                         className: "absolute top-12 left-6 w-3 h-3 text-[#e8b923]/20"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                        lineNumber: 169,
+                                        lineNumber: 182,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -307,14 +323,14 @@ function NewsletterPopup() {
                                                 children: "AVENGER"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                                lineNumber: 173,
+                                                lineNumber: 186,
                                                 columnNumber: 28
                                             }, this),
                                             " FAMILY"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                        lineNumber: 172,
+                                        lineNumber: 185,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -322,7 +338,7 @@ function NewsletterPopup() {
                                         children: "Get exclusive fitness tips, early access to new classes, and member-only discounts delivered to your inbox."
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                        lineNumber: 177,
+                                        lineNumber: 190,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -332,7 +348,7 @@ function NewsletterPopup() {
                                                 className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                                lineNumber: 183,
+                                                lineNumber: 196,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -349,13 +365,13 @@ function NewsletterPopup() {
                                                 className: "pl-10 h-11 bg-[#0a0a0a]/50 border-white/10 text-white placeholder:text-gray-600 rounded-md focus-visible:border-[#d4a017] focus-visible:ring-[#d4a017]/20"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                                lineNumber: 184,
+                                                lineNumber: 197,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                        lineNumber: 182,
+                                        lineNumber: 195,
                                         columnNumber: 17
                                     }, this),
                                     error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -363,7 +379,7 @@ function NewsletterPopup() {
                                         children: error
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                        lineNumber: 201,
+                                        lineNumber: 214,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -373,7 +389,7 @@ function NewsletterPopup() {
                                         children: loading ? 'Subscribing...' : 'Subscribe'
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                        lineNumber: 205,
+                                        lineNumber: 218,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -382,49 +398,49 @@ function NewsletterPopup() {
                                         children: "No thanks, maybe later"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                        lineNumber: 214,
+                                        lineNumber: 227,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$diamond$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Diamond$3e$__["Diamond"], {
                                         className: "absolute bottom-0 right-4 w-3 h-3 text-[#d4a017]/20"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                        lineNumber: 222,
+                                        lineNumber: 235,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                lineNumber: 167,
+                                lineNumber: 180,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "h-6"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                                lineNumber: 226,
+                                lineNumber: 239,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, "form", true, {
                         fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                        lineNumber: 156,
+                        lineNumber: 169,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-                    lineNumber: 119,
+                    lineNumber: 132,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-            lineNumber: 112,
+            lineNumber: 125,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/gym/newsletter-popup.tsx",
-        lineNumber: 107,
+        lineNumber: 120,
         columnNumber: 5
     }, this);
 }

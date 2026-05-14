@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { notifyAdmin } from '@/lib/notifications'
 
 export async function POST(request: NextRequest) {
   try {
@@ -61,6 +62,20 @@ export async function POST(request: NextRequest) {
 
     const trial = await db.freeTrial.create({
       data: sanitizedData,
+    })
+
+    await notifyAdmin({
+      subject: 'New free trial request',
+      text: [
+        `Name: ${sanitizedData.name}`,
+        `Email: ${sanitizedData.email}`,
+        sanitizedData.phone ? `Phone: ${sanitizedData.phone}` : '',
+        `Date: ${sanitizedData.date}`,
+        `Time: ${sanitizedData.time}`,
+        `Goal: ${sanitizedData.goal}`,
+      ]
+        .filter(Boolean)
+        .join('\n'),
     })
 
     return NextResponse.json(

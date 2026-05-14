@@ -2423,13 +2423,18 @@ function OurStory() {
                                             variant: "outline",
                                             size: "lg",
                                             className: "border-[#d4a017]/40 bg-transparent text-[#e8b923] hover:bg-[#d4a017]/10 hover:border-[#d4a017]/60 font-semibold transition-all duration-300",
+                                            onClick: ()=>{
+                                                document.getElementById("pricing")?.scrollIntoView({
+                                                    behavior: "smooth"
+                                                });
+                                            },
                                             children: [
                                                 "Learn More",
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__["ArrowRight"], {
                                                     className: "ml-1.5 h-4 w-4"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/gym/our-story.tsx",
-                                                    lineNumber: 112,
+                                                    lineNumber: 120,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
@@ -3452,8 +3457,18 @@ function BookClassModal({ open, onOpenChange, className }) {
     const handleSubmit = async (e)=>{
         e.preventDefault();
         setError('');
-        if (!name.trim() || !email.trim()) {
+        if (!name.trim() || !email.trim() || !phone.trim()) {
             setError('Please fill in all required fields.');
+            return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email.trim())) {
+            setError('Please enter a valid email address.');
+            return;
+        }
+        const cleanedPhone = phone.replace(/\D/g, '');
+        if (cleanedPhone.length !== 10) {
+            setError('Please enter a valid 10-digit phone number.');
             return;
         }
         setIsSubmitting(true);
@@ -3467,7 +3482,7 @@ function BookClassModal({ open, onOpenChange, className }) {
                     className,
                     name: name.trim(),
                     email: email.trim(),
-                    phone: phone.trim() || undefined,
+                    phone: cleanedPhone,
                     date: date || undefined,
                     timeSlot: timeSlot || undefined
                 })
@@ -3494,7 +3509,7 @@ function BookClassModal({ open, onOpenChange, className }) {
                     className: "h-1 bg-gradient-to-r from-[#d4a017] to-[#e8b923]"
                 }, void 0, false, {
                     fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                    lineNumber: 114,
+                    lineNumber: 125,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["AnimatePresence"], {
@@ -3520,12 +3535,12 @@ function BookClassModal({ open, onOpenChange, className }) {
                                     className: "h-8 w-8 text-emerald-400"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                    lineNumber: 126,
+                                    lineNumber: 137,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                lineNumber: 125,
+                                lineNumber: 136,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -3533,7 +3548,7 @@ function BookClassModal({ open, onOpenChange, className }) {
                                 children: "Booking Confirmed!"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                lineNumber: 128,
+                                lineNumber: 139,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3545,7 +3560,7 @@ function BookClassModal({ open, onOpenChange, className }) {
                                         children: className
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                        lineNumber: 130,
+                                        lineNumber: 141,
                                         columnNumber: 31
                                     }, this),
                                     "has been reserved. We'll send a confirmation to",
@@ -3555,14 +3570,14 @@ function BookClassModal({ open, onOpenChange, className }) {
                                         children: email
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                        lineNumber: 132,
+                                        lineNumber: 143,
                                         columnNumber: 17
                                     }, this),
                                     "."
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                lineNumber: 129,
+                                lineNumber: 140,
                                 columnNumber: 15
                             }, this),
                             timeSlot && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3572,14 +3587,14 @@ function BookClassModal({ open, onOpenChange, className }) {
                                         className: "h-3 w-3 text-[#e8b923]"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                        lineNumber: 136,
+                                        lineNumber: 147,
                                         columnNumber: 19
                                     }, this),
                                     date && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: date
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                        lineNumber: 137,
+                                        lineNumber: 148,
                                         columnNumber: 28
                                     }, this),
                                     date && timeSlot && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3587,20 +3602,20 @@ function BookClassModal({ open, onOpenChange, className }) {
                                         children: "•"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                        lineNumber: 138,
+                                        lineNumber: 149,
                                         columnNumber: 40
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: timeSlot
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                        lineNumber: 139,
+                                        lineNumber: 150,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                lineNumber: 135,
+                                lineNumber: 146,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3609,13 +3624,13 @@ function BookClassModal({ open, onOpenChange, className }) {
                                 children: "Done"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                lineNumber: 142,
+                                lineNumber: 153,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, "success", true, {
                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                        lineNumber: 118,
+                        lineNumber: 129,
                         columnNumber: 13
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
                         initial: {
@@ -3638,14 +3653,14 @@ function BookClassModal({ open, onOpenChange, className }) {
                                                 className: "h-5 w-5 text-[#e8b923]"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                lineNumber: 158,
+                                                lineNumber: 169,
                                                 columnNumber: 19
                                             }, this),
                                             "Book a Class"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                        lineNumber: 157,
+                                        lineNumber: 168,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
@@ -3653,13 +3668,13 @@ function BookClassModal({ open, onOpenChange, className }) {
                                         children: "Reserve your spot in an upcoming session."
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                        lineNumber: 161,
+                                        lineNumber: 172,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                lineNumber: 156,
+                                lineNumber: 167,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -3673,12 +3688,12 @@ function BookClassModal({ open, onOpenChange, className }) {
                                             children: className
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                            lineNumber: 170,
+                                            lineNumber: 180,
                                             columnNumber: 21
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                        lineNumber: 169,
+                                        lineNumber: 179,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3693,13 +3708,13 @@ function BookClassModal({ open, onOpenChange, className }) {
                                                         children: "*"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                        lineNumber: 179,
+                                                        lineNumber: 188,
                                                         columnNumber: 31
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                lineNumber: 178,
+                                                lineNumber: 187,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -3710,13 +3725,13 @@ function BookClassModal({ open, onOpenChange, className }) {
                                                 className: "bg-white/[0.04] border-white/[0.08] text-white placeholder:text-neutral-500 focus:border-[#d4a017]/50 focus:ring-[#d4a017]/20 h-10"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                lineNumber: 181,
+                                                lineNumber: 190,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                        lineNumber: 177,
+                                        lineNumber: 186,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3731,13 +3746,13 @@ function BookClassModal({ open, onOpenChange, className }) {
                                                         children: "*"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                        lineNumber: 193,
+                                                        lineNumber: 201,
                                                         columnNumber: 27
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                lineNumber: 192,
+                                                lineNumber: 200,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -3749,13 +3764,13 @@ function BookClassModal({ open, onOpenChange, className }) {
                                                 className: "bg-white/[0.04] border-white/[0.08] text-white placeholder:text-neutral-500 focus:border-[#d4a017]/50 focus:ring-[#d4a017]/20 h-10"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                lineNumber: 195,
+                                                lineNumber: 203,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                        lineNumber: 191,
+                                        lineNumber: 199,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3763,10 +3778,20 @@ function BookClassModal({ open, onOpenChange, className }) {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
                                                 className: "text-neutral-300 text-xs",
-                                                children: "Phone"
-                                            }, void 0, false, {
+                                                children: [
+                                                    "Phone ",
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                        className: "text-red-400",
+                                                        children: "*"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/gym/book-class-modal.tsx",
+                                                        lineNumber: 215,
+                                                        columnNumber: 27
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
                                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                lineNumber: 207,
+                                                lineNumber: 214,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -3774,16 +3799,17 @@ function BookClassModal({ open, onOpenChange, className }) {
                                                 value: phone,
                                                 onChange: (e)=>setPhone(e.target.value),
                                                 placeholder: "+91 98765 43210",
+                                                required: true,
                                                 className: "bg-white/[0.04] border-white/[0.08] text-white placeholder:text-neutral-500 focus:border-[#d4a017]/50 focus:ring-[#d4a017]/20 h-10"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                lineNumber: 208,
+                                                lineNumber: 217,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                        lineNumber: 206,
+                                        lineNumber: 213,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3797,7 +3823,7 @@ function BookClassModal({ open, onOpenChange, className }) {
                                                         children: "Preferred Date"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                        lineNumber: 221,
+                                                        lineNumber: 229,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -3807,13 +3833,13 @@ function BookClassModal({ open, onOpenChange, className }) {
                                                         className: "bg-white/[0.04] border-white/[0.08] text-white placeholder:text-neutral-500 focus:border-[#d4a017]/50 focus:ring-[#d4a017]/20 h-10 [color-scheme:dark]"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                        lineNumber: 222,
+                                                        lineNumber: 230,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                lineNumber: 220,
+                                                lineNumber: 228,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3824,7 +3850,7 @@ function BookClassModal({ open, onOpenChange, className }) {
                                                         children: "Time Slot"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                        lineNumber: 232,
+                                                        lineNumber: 239,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -3838,12 +3864,12 @@ function BookClassModal({ open, onOpenChange, className }) {
                                                                     className: "text-neutral-500"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                                    lineNumber: 235,
+                                                                    lineNumber: 242,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                                lineNumber: 234,
+                                                                lineNumber: 241,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -3854,30 +3880,30 @@ function BookClassModal({ open, onOpenChange, className }) {
                                                                         children: slot
                                                                     }, slot, false, {
                                                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                                        lineNumber: 239,
+                                                                        lineNumber: 246,
                                                                         columnNumber: 27
                                                                     }, this))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                                lineNumber: 237,
+                                                                lineNumber: 244,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                        lineNumber: 233,
+                                                        lineNumber: 240,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                lineNumber: 231,
+                                                lineNumber: 238,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                        lineNumber: 218,
+                                        lineNumber: 227,
                                         columnNumber: 17
                                     }, this),
                                     error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -3895,14 +3921,14 @@ function BookClassModal({ open, onOpenChange, className }) {
                                                 className: "h-3.5 w-3.5 shrink-0"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                lineNumber: 259,
+                                                lineNumber: 265,
                                                 columnNumber: 21
                                             }, this),
                                             error
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                        lineNumber: 254,
+                                        lineNumber: 260,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3915,7 +3941,7 @@ function BookClassModal({ open, onOpenChange, className }) {
                                                     className: "mr-2 h-4 w-4 animate-spin"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                                    lineNumber: 272,
+                                                    lineNumber: 277,
                                                     columnNumber: 23
                                                 }, this),
                                                 "Booking..."
@@ -3923,35 +3949,35 @@ function BookClassModal({ open, onOpenChange, className }) {
                                         }, void 0, true) : 'Confirm Booking'
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                        lineNumber: 265,
+                                        lineNumber: 270,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                                lineNumber: 166,
+                                lineNumber: 177,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, "form", true, {
                         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                        lineNumber: 150,
+                        lineNumber: 161,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/gym/book-class-modal.tsx",
-                    lineNumber: 116,
+                    lineNumber: 127,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/gym/book-class-modal.tsx",
-            lineNumber: 112,
+            lineNumber: 124,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/gym/book-class-modal.tsx",
-        lineNumber: 111,
+        lineNumber: 123,
         columnNumber: 5
     }, this);
 }
@@ -4814,558 +4840,11 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
     __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
 }
 }),
-"[project]/src/components/gym/pricing.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
-"use strict";
+"[project]/src/components/gym/pricing.tsx [app-client] (ecmascript)", ((__turbopack_context__, module, exports) => {
 
-__turbopack_context__.s([
-    "Pricing",
-    ()=>Pricing
-]);
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$utils$2f$use$2d$in$2d$view$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/framer-motion/dist/es/utils/use-in-view.mjs [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/check.js [app-client] (ecmascript) <export default as Check>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$zap$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Zap$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/zap.js [app-client] (ecmascript) <export default as Zap>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/arrow-right.js [app-client] (ecmascript) <export default as ArrowRight>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$dumbbell$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Dumbbell$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/dumbbell.js [app-client] (ecmascript) <export default as Dumbbell>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/users.js [app-client] (ecmascript) <export default as Users>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/user.js [app-client] (ecmascript) <export default as User>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$lock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Lock$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/lock.js [app-client] (ecmascript) <export default as Lock>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$utensils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Utensils$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/utensils.js [app-client] (ecmascript) <export default as Utensils>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$bath$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Bath$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/bath.js [app-client] (ecmascript) <export default as Bath>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/star.js [app-client] (ecmascript) <export default as Star>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$crown$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Crown$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/crown.js [app-client] (ecmascript) <export default as Crown>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trophy$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trophy$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/trophy.js [app-client] (ecmascript) <export default as Trophy>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Clock$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/clock.js [app-client] (ecmascript) <export default as Clock>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/button.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$gym$2f$scroll$2d$reveal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/gym/scroll-reveal.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$gym$2f$comparison$2d$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/gym/comparison-table.tsx [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/utils.ts [app-client] (ecmascript)");
-;
-var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.signature();
-'use client';
-;
-;
-;
-;
-;
-;
-;
-const plans = [
-    {
-        name: 'STARTER',
-        price: 1499,
-        priceDisplay: '₹1,499',
-        period: '/month',
-        features: [
-            'Gym Access',
-            'Locker Room',
-            'Basic Equipment',
-            '2 Group Classes/week'
-        ],
-        featureIcons: [
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$dumbbell$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Dumbbell$3e$__["Dumbbell"],
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$lock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Lock$3e$__["Lock"],
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__["Star"],
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__["Users"]
-        ]
-    },
-    {
-        name: 'PRO',
-        price: 2999,
-        priceDisplay: '₹2,999',
-        period: '/month',
-        popular: true,
-        badge: 'Best Value',
-        features: [
-            'Full Gym Access',
-            'All Group Classes',
-            'Personal Locker',
-            'Nutrition Consultation',
-            'Steam & Sauna',
-            '1 PT Session/month'
-        ],
-        featureIcons: [
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$dumbbell$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Dumbbell$3e$__["Dumbbell"],
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__["Users"],
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$lock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Lock$3e$__["Lock"],
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$utensils$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Utensils$3e$__["Utensils"],
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$bath$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Bath$3e$__["Bath"],
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__["User"]
-        ]
-    },
-    {
-        name: 'ELITE',
-        price: 4999,
-        priceDisplay: '₹4,999',
-        period: '/month',
-        features: [
-            'Everything in Pro',
-            'Unlimited PT Sessions',
-            'Priority Booking',
-            'VIP Lounge Access',
-            'Monthly Body Assessment',
-            'Guest Passes (2/month)'
-        ],
-        featureIcons: [
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$crown$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Crown$3e$__["Crown"],
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__["User"],
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Clock$3e$__["Clock"],
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trophy$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trophy$3e$__["Trophy"],
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__["Star"],
-            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__["Users"]
-        ]
-    }
-];
-function AnimatedPrice({ value, prefix = '₹', isInView, isPopular }) {
-    _s();
-    const [count, setCount] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(value);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "AnimatedPrice.useEffect": ()=>{
-            if (!isInView) return;
-            const duration = 1500;
-            const increment = value / (duration / 16);
-            let start = 0;
-            let intervalId;
-            const rafId = requestAnimationFrame({
-                "AnimatedPrice.useEffect.rafId": ()=>{
-                    setCount(0);
-                    intervalId = setInterval({
-                        "AnimatedPrice.useEffect.rafId": ()=>{
-                            start += increment;
-                            if (start >= value) {
-                                setCount(value);
-                                clearInterval(intervalId);
-                            } else {
-                                setCount(Math.floor(start));
-                            }
-                        }
-                    }["AnimatedPrice.useEffect.rafId"], 16);
-                }
-            }["AnimatedPrice.useEffect.rafId"]);
-            return ({
-                "AnimatedPrice.useEffect": ()=>{
-                    cancelAnimationFrame(rafId);
-                    clearInterval(intervalId);
-                }
-            })["AnimatedPrice.useEffect"];
-        }
-    }["AnimatedPrice.useEffect"], [
-        isInView,
-        value
-    ]);
-    const formattedCount = count.toLocaleString('en-IN');
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])('font-extrabold tabular-nums', isPopular ? 'text-5xl md:text-6xl gradient-text' : 'text-4xl md:text-5xl text-white'),
-        children: [
-            prefix,
-            formattedCount
-        ]
-    }, void 0, true, {
-        fileName: "[project]/src/components/gym/pricing.tsx",
-        lineNumber: 103,
-        columnNumber: 5
-    }, this);
-}
-_s(AnimatedPrice, "USR+A11Cdnmqbgvs6vNHDej9CwI=");
-_c = AnimatedPrice;
-function Pricing() {
-    _s1();
-    const ref = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    const isInView = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$utils$2f$use$2d$in$2d$view$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useInView"])(ref, {
-        once: true,
-        amount: 0.2
-    });
-    const [comparisonOpen, setComparisonOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
-        id: "pricing",
-        ref: ref,
-        className: "relative py-20 md:py-28 bg-[#111111] overflow-hidden dot-grid section-progress corner-accent-both",
-        children: [
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                className: "absolute top-8 left-8 text-[200px] font-black text-white/[0.02] pointer-events-none select-none leading-none parallax-section-number",
-                children: "02"
-            }, void 0, false, {
-                fileName: "[project]/src/components/gym/pricing.tsx",
-                lineNumber: 122,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "mx-auto max-w-7xl px-4 sm:px-6 lg:px-8",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$gym$2f$scroll$2d$reveal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ScrollReveal"], {
-                        className: "text-center mb-14 md:mb-20",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "text-xs font-bold tracking-[0.3em] uppercase text-[#d4a017]/60",
-                                children: "02 — Membership"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/gym/pricing.tsx",
-                                lineNumber: 126,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                className: "text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mt-2",
-                                style: {
-                                    textShadow: '0 0 40px rgba(212, 160, 23, 0.1)'
-                                },
-                                children: "MEMBERSHIP PLANS"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/gym/pricing.tsx",
-                                lineNumber: 127,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "mx-auto mt-4 flex items-center gap-2",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "h-px w-8 bg-[#d4a017]/30"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/gym/pricing.tsx",
-                                        lineNumber: 131,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "h-1 w-8 rounded-full bg-gradient-to-r from-[#d4a017] to-[#e8b923]"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/gym/pricing.tsx",
-                                        lineNumber: 132,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "h-px w-8 bg-[#d4a017]/30"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/gym/pricing.tsx",
-                                        lineNumber: 133,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "size-1.5 rotate-45 bg-[#d4a017]"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/gym/pricing.tsx",
-                                        lineNumber: 134,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "h-px w-8 bg-[#d4a017]/30"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/gym/pricing.tsx",
-                                        lineNumber: 135,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "h-1 w-8 rounded-full bg-gradient-to-r from-[#e8b923] to-[#d4a017]"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/gym/pricing.tsx",
-                                        lineNumber: 136,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "h-px w-8 bg-[#d4a017]/30"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/gym/pricing.tsx",
-                                        lineNumber: 137,
-                                        columnNumber: 13
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/components/gym/pricing.tsx",
-                                lineNumber: 130,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "mx-auto mt-6 max-w-2xl text-base sm:text-lg text-neutral-400",
-                                children: "Invest in yourself. Choose the plan that matches your ambition."
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/gym/pricing.tsx",
-                                lineNumber: 139,
-                                columnNumber: 11
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/components/gym/pricing.tsx",
-                        lineNumber: 125,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-5 lg:gap-8 items-stretch",
-                        children: plans.map((plan, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$gym$2f$scroll$2d$reveal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ScrollReveal"], {
-                                delay: index * 0.15,
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])('relative flex h-full flex-col rounded-2xl border p-7 md:p-8 backdrop-blur-sm transition-all duration-300', plan.popular ? 'border-[#d4a017]/60 bg-[#d4a017]/[0.06] md:scale-105 md:-my-2 shadow-[0_0_60px_-10px_rgba(212,160,23,0.15)] breathing-border animated-border-card premium-stripe-bg' : 'border-white/[0.06] bg-white/[0.03] hover:border-white/[0.12] hover:-translate-y-1 card-glow amber-glow-hover card-border-hover'),
-                                    children: [
-                                        plan.popular && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "absolute -inset-4 rounded-3xl bg-gradient-to-br from-[#d4a017]/20 via-[#e8b923]/10 to-transparent blur-2xl pro-card-glow -z-10"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/gym/pricing.tsx",
-                                            lineNumber: 158,
-                                            columnNumber: 19
-                                        }, this),
-                                        plan.popular && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "absolute -top-3.5 left-1/2 -translate-x-1/2",
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#d4a017] to-[#e8b923] px-5 py-1.5 text-sm font-bold uppercase tracking-wider text-black shadow-lg popular-badge-glow",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$zap$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Zap$3e$__["Zap"], {
-                                                        className: "h-4 w-4"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/gym/pricing.tsx",
-                                                        lineNumber: 165,
-                                                        columnNumber: 23
-                                                    }, this),
-                                                    "Most Popular"
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/components/gym/pricing.tsx",
-                                                lineNumber: 164,
-                                                columnNumber: 21
-                                            }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/gym/pricing.tsx",
-                                            lineNumber: 163,
-                                            columnNumber: 19
-                                        }, this),
-                                        plan.popular && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "absolute -right-1 top-8 md:top-10 z-20",
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "relative",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "bg-gradient-to-r from-[#d4a017] to-[#e8b923] text-black text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-l-md shadow-md",
-                                                        children: "★ PRO"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/gym/pricing.tsx",
-                                                        lineNumber: 175,
-                                                        columnNumber: 23
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "absolute right-0 top-full w-0 h-0 border-l-[6px] border-l-[#b8860b] border-b-[6px] border-b-transparent"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/gym/pricing.tsx",
-                                                        lineNumber: 178,
-                                                        columnNumber: 23
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/components/gym/pricing.tsx",
-                                                lineNumber: 174,
-                                                columnNumber: 21
-                                            }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/gym/pricing.tsx",
-                                            lineNumber: 173,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])('text-sm font-bold uppercase tracking-[0.2em]', plan.popular ? 'text-[#e8b923]' : 'text-neutral-400'),
-                                            children: plan.name
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/gym/pricing.tsx",
-                                            lineNumber: 184,
-                                            columnNumber: 17
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "mt-4 flex items-baseline gap-1",
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(AnimatedPrice, {
-                                                value: plan.price,
-                                                isInView: isInView,
-                                                isPopular: !!plan.popular
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/gym/pricing.tsx",
-                                                lineNumber: 195,
-                                                columnNumber: 19
-                                            }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/gym/pricing.tsx",
-                                            lineNumber: 194,
-                                            columnNumber: 17
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])('mt-1 text-xs font-normal italic', plan.popular ? 'text-[#d4a017]/50' : 'text-neutral-600'),
-                                            children: "per month"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/gym/pricing.tsx",
-                                            lineNumber: 199,
-                                            columnNumber: 17
-                                        }, this),
-                                        plan.badge && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "mt-2",
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "inline-flex items-center gap-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 text-xs font-semibold text-emerald-400",
-                                                children: "Save 20%"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/gym/pricing.tsx",
-                                                lineNumber: 209,
-                                                columnNumber: 21
-                                            }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/gym/pricing.tsx",
-                                            lineNumber: 208,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])('my-6 h-px w-full', plan.popular ? 'bg-gradient-to-r from-transparent via-[#d4a017]/40 to-transparent' : 'bg-white/[0.06]')
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/gym/pricing.tsx",
-                                            lineNumber: 216,
-                                            columnNumber: 17
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
-                                            className: "flex flex-1 flex-col gap-3.5",
-                                            children: plan.features.map((feature, i)=>{
-                                                const FeatureIcon = plan.featureIcons[i] || __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"];
-                                                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                                    className: "flex items-start gap-3",
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])('mt-0.5 flex items-center justify-center h-4 w-4 shrink-0 rounded-sm', plan.popular ? 'text-[#e8b923]' : 'text-neutral-500'),
-                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FeatureIcon, {
-                                                                className: "h-3.5 w-3.5"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/components/gym/pricing.tsx",
-                                                                lineNumber: 235,
-                                                                columnNumber: 27
-                                                            }, this)
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/components/gym/pricing.tsx",
-                                                            lineNumber: 231,
-                                                            columnNumber: 25
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                            className: "text-sm text-neutral-300",
-                                                            children: feature
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/components/gym/pricing.tsx",
-                                                            lineNumber: 237,
-                                                            columnNumber: 25
-                                                        }, this)
-                                                    ]
-                                                }, feature, true, {
-                                                    fileName: "[project]/src/components/gym/pricing.tsx",
-                                                    lineNumber: 230,
-                                                    columnNumber: 23
-                                                }, this);
-                                            })
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/gym/pricing.tsx",
-                                            lineNumber: 226,
-                                            columnNumber: 17
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])('mt-8 w-full font-semibold transition-all duration-300', plan.popular ? 'bg-gradient-to-r from-[#d4a017] to-[#e8b923] text-black hover:shadow-[0_0_20px_-3px_rgba(212,160,23,0.5)] shimmer btn-ripple' : 'border border-white/10 bg-white/[0.04] text-white hover:border-[#d4a017]/40 hover:bg-[#d4a017]/10'),
-                                            variant: plan.popular ? 'default' : 'outline',
-                                            size: "lg",
-                                            children: [
-                                                "Get Started",
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__["ArrowRight"], {
-                                                    className: "ml-1.5 h-4 w-4"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/components/gym/pricing.tsx",
-                                                    lineNumber: 255,
-                                                    columnNumber: 19
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
-                                            fileName: "[project]/src/components/gym/pricing.tsx",
-                                            lineNumber: 244,
-                                            columnNumber: 17
-                                        }, this)
-                                    ]
-                                }, void 0, true, {
-                                    fileName: "[project]/src/components/gym/pricing.tsx",
-                                    lineNumber: 148,
-                                    columnNumber: 15
-                                }, this)
-                            }, plan.name, false, {
-                                fileName: "[project]/src/components/gym/pricing.tsx",
-                                lineNumber: 147,
-                                columnNumber: 13
-                            }, this))
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/gym/pricing.tsx",
-                        lineNumber: 145,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$gym$2f$scroll$2d$reveal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ScrollReveal"], {
-                        delay: 0.5,
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "mt-14 text-center space-y-4",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                                    variant: "outline",
-                                    size: "lg",
-                                    className: "border-[#d4a017]/40 bg-transparent text-[#e8b923] hover:bg-[#d4a017]/10 hover:border-[#d4a017]/60 font-semibold transition-all duration-300",
-                                    onClick: ()=>{
-                                        const el = document.getElementById('free-trial');
-                                        if (el) el.scrollIntoView({
-                                            behavior: 'smooth'
-                                        });
-                                    },
-                                    children: "Book Free Trial"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/gym/pricing.tsx",
-                                    lineNumber: 265,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                        onClick: ()=>setComparisonOpen(true),
-                                        className: "text-sm text-neutral-500 hover:text-[#d4a017] transition-colors duration-300 underline underline-offset-4 decoration-neutral-700 hover:decoration-[#d4a017]/50",
-                                        children: "Compare Plans →"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/gym/pricing.tsx",
-                                        lineNumber: 277,
-                                        columnNumber: 15
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/gym/pricing.tsx",
-                                    lineNumber: 276,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/components/gym/pricing.tsx",
-                            lineNumber: 264,
-                            columnNumber: 11
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/gym/pricing.tsx",
-                        lineNumber: 263,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/src/components/gym/pricing.tsx",
-                lineNumber: 123,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$gym$2f$comparison$2d$table$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ComparisonTable"], {
-                open: comparisonOpen,
-                onOpenChange: setComparisonOpen
-            }, void 0, false, {
-                fileName: "[project]/src/components/gym/pricing.tsx",
-                lineNumber: 287,
-                columnNumber: 7
-            }, this)
-        ]
-    }, void 0, true, {
-        fileName: "[project]/src/components/gym/pricing.tsx",
-        lineNumber: 120,
-        columnNumber: 5
-    }, this);
-}
-_s1(Pricing, "vdNogC0I9A4nGGuhXCXS1k/tzeo=", false, function() {
-    return [
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$utils$2f$use$2d$in$2d$view$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useInView"]
-    ];
-});
-_c1 = Pricing;
-var _c, _c1;
-__turbopack_context__.k.register(_c, "AnimatedPrice");
-__turbopack_context__.k.register(_c1, "Pricing");
-if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
-    __turbopack_context__.k.registerExports(__turbopack_context__.m, globalThis.$RefreshHelpers$);
-}
+const e = new Error("Could not parse module '[project]/src/components/gym/pricing.tsx'\n\nExpected '</', got ')'");
+e.code = 'MODULE_UNPARSABLE';
+throw e;
 }),
 "[project]/src/components/gym/trainer-profile-modal.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";

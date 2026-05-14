@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { notifyAdmin } from '@/lib/notifications'
 
 export async function POST(request: NextRequest) {
   try {
@@ -48,6 +49,19 @@ export async function POST(request: NextRequest) {
     // Save to database
     const inquiry = await db.contactInquiry.create({
       data: sanitizedData,
+    })
+
+    await notifyAdmin({
+      subject: 'New contact inquiry',
+      text: [
+        `From: ${sanitizedData.name}`,
+        `Email: ${sanitizedData.email}`,
+        sanitizedData.phone ? `Phone: ${sanitizedData.phone}` : '',
+        '',
+        sanitizedData.message,
+      ]
+        .filter(Boolean)
+        .join('\n'),
     })
 
     return NextResponse.json(

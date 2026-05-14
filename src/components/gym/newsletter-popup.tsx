@@ -45,10 +45,10 @@ export function NewsletterPopup() {
   useEffect(() => {
     if (isDismissed()) return
 
-    const handleScroll = () => {
+    let raf = 0
+    const run = () => {
       if (isDismissed()) return
 
-      // Don't show if cookie consent hasn't been resolved yet
       const cookieConsent = localStorage.getItem(COOKIE_KEY)
       if (!cookieConsent) return
 
@@ -58,12 +58,25 @@ export function NewsletterPopup() {
 
       if (scrollPercent >= 0.5) {
         setOpen(true)
-        window.removeEventListener('scroll', handleScroll)
+        window.removeEventListener('scroll', tick)
+        if (raf) cancelAnimationFrame(raf)
       }
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    const tick = () => {
+      if (raf) return
+      raf = requestAnimationFrame(() => {
+        raf = 0
+        run()
+      })
+    }
+
+    window.addEventListener('scroll', tick, { passive: true })
+    tick()
+    return () => {
+      window.removeEventListener('scroll', tick)
+      if (raf) cancelAnimationFrame(raf)
+    }
   }, [])
 
   const handleDismiss = useCallback(() => {
